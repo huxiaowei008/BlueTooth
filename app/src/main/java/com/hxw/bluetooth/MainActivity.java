@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onLeScan(BluetoothDevice device, int rssi, byte[] scanRecord) {
             Log.d(TAG, "onLeScan: " + device.getName());
-            if ("MLT-BT05".equals(device.getName())) {
+            if ("motech_60088885".equals(device.getName())) {
                 bluetoothAdapter.stopLeScan(this);
                 mBluetoothGatt = device.connectGatt(MainActivity.this, false, mGattCallback);
             }
@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
                 //搜索到服务回调
                 Log.d(TAG, "onServicesDiscovered: 成功");
                 data.addAll(gatt.getServices());
-                characteristic = gatt.getServices().get(3).getCharacteristics().get(0);
+//                characteristic = gatt.getServices().get(2).getCharacteristics().get(0);
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -142,8 +142,9 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onCharacteristicWrite(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
             super.onCharacteristicWrite(gatt, characteristic, status);
-            if (status == BluetoothGatt.GATT_SUCCESS)
+            if (status == BluetoothGatt.GATT_SUCCESS) {
                 Log.d(TAG, "onCharacteristicWrite: " + HexUtil.encodeHexStr(characteristic.getValue()));
+            }
         }
 
         /**
@@ -183,8 +184,9 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onDescriptorWrite(BluetoothGatt gatt, BluetoothGattDescriptor descriptor, int status) {
             super.onDescriptorWrite(gatt, descriptor, status);
-            if (status == BluetoothGatt.GATT_SUCCESS)
+            if (status == BluetoothGatt.GATT_SUCCESS) {
                 Log.d(TAG, "onDescriptorWrite: " + HexUtil.encodeHexStr(descriptor.getValue()));
+            }
         }
 
         /**
